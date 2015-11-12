@@ -160,7 +160,7 @@ def meetWindowSize(xyz_acc):#[5,3] or [50,3]
 		xyz_acc_rsz=np.resize(xyz_acc,(50,3))
 		return xyz_acc_rsz
 
-def main(xyz_acc):#[n,3]
+def main(xyz_acc,speed):#[n,3]
 	#########################
 	#some err
 	##############
@@ -236,9 +236,12 @@ def main(xyz_acc):#[n,3]
 	if prob_drivesit>=0.5:print 'not-final drive sit',prob_drivesit
 	elif prob_drivesit<=0.5:print'not-final walkrunrid',1-prob_drivesit
 	
+
+	
 	############
 	#driving 0| sitting1
 	################
+	"""
 	if prob_drivesit>=0.5:
 		#load model
 		paraPath_level2='/home/yr/magnetic_fea/data1101_drivesit/rf-para-drivesit'
@@ -257,6 +260,9 @@ def main(xyz_acc):#[n,3]
 		elif sit_prob<0.5:
 			print 'final pred drive',1.-sit_prob
 			label='driving'
+	"""
+	if speed>=1:label='driving'
+	elif speed<1:label='sitting'
 
 
 	############
@@ -319,7 +325,7 @@ if __name__=="__main__":
 	#xyz_acc_small=xyz_acc[:5,:];#[5,3];
 	xyz_acc=meetWindowSize(xyz_acc_small);#output at least [50,3]
 	#	
-	label=main(xyz_acc)
+	label=main(xyz_acc,speed) #xyz=[n,3] ,speed=1x1scalar
 
 	plt.show()
 
